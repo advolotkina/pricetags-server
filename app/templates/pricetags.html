@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+    <div class="page-header">
+        <h1>Состояние ценников</h1>
+    </div>
+    <table class="table table-hover">
+        <tr>
+            <td width="150px">
+                <p>Серийный номер</p>
+            </td>
+            <td>
+                <p>Последняя активность</p>
+            </td>
+        </tr>
+        {% for pricetag in pricetags %}
+            <tr>
+            <td width="150px">
+                <p>{{pricetag.serial_number}}</p>
+            </td>
+            <td>
+                <p>{{moment(pricetag.last_ping).fromNow()}}</p>
+            </td>
+        {% endfor %}
+    </tr>
+    </table>
+</div>
+{% endblock %}

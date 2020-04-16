@@ -16,12 +16,13 @@ MSG_UPDATE = 0
 MSG_RESET = 1
 MSG_REBOOT = 2
 
+
 def update_price_tag(good_uid, name, price):
 	# Good.update(good_uid, name, price)
-    host, serial_number = Good.find_pricetag_ip_and_serial(good_uid)
+    # host, serial_number = Good.find_pricetag_ip_and_serial(good_uid)
 	#достать запись из бд
 	#захардкоженный путь
-    # host = "10.42.0.125"
+    host = "10.42.0.125"
     # path = "/home/zhblnd/diplom/flask-server/goods/%s" % serial_numbergood_id
     serial_number = "/home/zhblnd/diplom/flask-server/pricetags/test123/good1"
     serial = "test123"
@@ -36,11 +37,14 @@ def update_price_tag(good_uid, name, price):
         data = s.recv(1024)
     print('Received', repr(data))
 
+
 def update_good_name(good_uid):
     pass
 
+
 def update_good_price(good_uid):
     pass
+
 
 def update_good_pic(good_uid):
     pass
