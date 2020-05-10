@@ -4,13 +4,12 @@ from flask_sqlalchemy import SQLAlchemy
 from config import config
 from flask_login import LoginManager
 from flask_moment import Moment
-from flask_user import UserManager
+
 login_manager = LoginManager()
 login_manager.login_view = 'auth.login'
 moment = Moment()
 bootstrap = Bootstrap()
 db = SQLAlchemy()
-from .models import User
 
 
 def create_app(config_name):

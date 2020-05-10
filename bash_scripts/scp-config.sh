@@ -5,7 +5,6 @@ spawn ssh-copy-id root@$address
 
 expect "Are you sure you want to continue connecting (yes/no)?"
 send -- "yes\r"
-expect "*"
-expect "root@$address\'s password:*"
+expect "root@$address\'s password:"
 send -- "$password\r"
 expect eof
