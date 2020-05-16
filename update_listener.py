@@ -26,8 +26,10 @@ handlers = {1: update_good, 2: update_good_name,
 def prepare_files(uid):
     with app.app_context():
         good = Good.query.filter_by(uid=uid).first()
-        shutil.copyfile(f'./tmp/{uid}/specs', f'./goods/{uid}/specs')
-        shutil.copyfile(f'./tmp/{uid}/good.bin', f'./goods/{uid}/good.bin')
+        if os.path.exists(f'./tmp/{uid}/specs'):
+            shutil.copyfile(f'./tmp/{uid}/specs', f'./goods/{uid}/specs')
+        if os.path.exists(f'./tmp/{uid}/good.bin'):
+            shutil.copyfile(f'./tmp/{uid}/good.bin', f'./goods/{uid}/good.bin')
         with open(f'./goods/{uid}/name', 'w') as f:
             f.write(good.name)
         with open(f'./goods/{uid}/price', 'w') as f:
@@ -66,22 +68,22 @@ def serve_client_connection(conn):
     if goods is None:
         return
 
-    for good in goods[1:]:
+    for good in goods:
         uid = good['uid']
         with app.app_context():
             curr_good = Good.query.filter_by(uid=uid).first()
             os.mkdir(f'./tmp/{uid}/')
-            if good['name']:
+            if 'name' in good:
                 curr_good.name = good['name']
-            if good['price']:
+            if 'price' in good:
                 curr_good.price = float(good['price'])
-            if good['path_to_pic']:
+            if 'path_to_pic' in good:
                 url = good['path_to_pic']
                 r = requests.get(url)
-                with open(f'./tmp/{uid}/good.bin', 'wb') as f:
+                with open(f'./tmp/{uid}/good.jpg', 'wb') as f:
                     f.write(r.content)
-                prepare_image(f'./tmp/{uid}/good.bin')
-            if good['path_to_specs']:
+                prepare_image(f'./tmp/{uid}/')
+            if 'path_to_specs' in good:
                 url = good['path_to_specs']
                 r = requests.get(url)
                 with open(f'./tmp/{uid}/specs', 'wb') as f:
@@ -93,10 +95,9 @@ def serve_client_connection(conn):
                 return
             else:
                 prepare_files(uid)
-                os.rmdir(f'./tmp/{uid}/')
-
-    with app.app_context():
-        handlers[goods[0]['MSG']]()
+                shutil.rmtree(f'./tmp/{uid}')
+                with app.app_context():
+                    handlers[good['MSG']](uid)
 
 
 def read_message(conn):

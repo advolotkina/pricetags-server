@@ -17,6 +17,7 @@ def serve_client_connection(conn, addr):
         return
 
     serial = client_message.decode('utf-8')
+    serial = serial.replace('\n', '')
     print(serial, addr[0])
     with app.app_context():
         PriceTag.update(serial, addr[0])

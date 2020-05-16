@@ -1,4 +1,4 @@
-from flask import render_template, redirect, url_for, flash
+from flask import render_template, redirect, url_for, flash, send_from_directory
 from . import main
 from . import pricetags_app
 from flask_login import login_required, current_user
@@ -11,6 +11,12 @@ from pricetag_update import upload_data_to_pricetag
 @main.route('/')
 def index_page():
     return render_template('index.html'), 200
+
+
+@main.route('/images/<path:path>')
+def send_image(path):
+    """Метод для тестирования загрузки изображений и файлов с "удалённого" сервера"""
+    return send_from_directory('/home/zhblnd/diplom/flask-server/images', path)
 
 
 @pricetags_app.route('/')
@@ -45,6 +51,7 @@ def add_new_pricetag():
             except Exception:
                 db.session.rollback()
             else:
+                # print('no errors')
                 upload_data_to_pricetag(form.serial.data)
         else:
             flash('Ценник с таким серийным номером уже существует.')
