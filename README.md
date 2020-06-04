@@ -6,15 +6,15 @@
 под управлением OC Linux"
 
 ## Диаграммы классов
-*Диаграмма классов локального сервера*
+######*Диаграмма классов локального сервера*
 ![Class Diagram](https://github.com/advolotkina/pricetags-server/blob/master/images/class-diagram.png?raw=true)
-*Диаграмма классов модуля app.auth*
+######*Диаграмма классов модуля app.auth*
 ![Class Diagram](https://github.com/advolotkina/pricetags-server/blob/master/images/Screenshot%20from%202020-06-04%2014-00-13.png?raw=true)
-*Диаграмма классов модуля app.main*
+######*Диаграмма классов модуля app.main*
 ![Class Diagram](https://github.com/advolotkina/pricetags-server/blob/master/images/Screenshot%20from%202020-06-04%2014-00-20.png?raw=true)
-*Диаграмма классов модуля app.models*
+######*Диаграмма классов модуля app.models*
 ![Class Diagram](https://github.com/advolotkina/pricetags-server/blob/master/images/Screenshot%20from%202020-06-04%2014-00-43.png?raw=true)
-*Диаграмма классов модуля app.config*
+######*Диаграмма классов модуля app.config*
 ![Class Diagram](https://github.com/advolotkina/pricetags-server/blob/master/images/Screenshot%20from%202020-06-04%2014-01-26.png?raw=true)
 
 
