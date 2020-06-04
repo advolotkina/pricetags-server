@@ -16,7 +16,7 @@ def login():
             if next is None or not next.startswith('/'):
                 next = url_for('main.index_page')
             return redirect(next)
-        flash('Invalid username or password.')
+        flash('Неправильный логин или пароль.')
     return render_template('auth/login.html', form=form)
 
 
@@ -24,5 +24,4 @@ def login():
 @login_required
 def logout():
     logout_user()
-    flash('You have been logged out.')
     return redirect(url_for('main.index_page'))

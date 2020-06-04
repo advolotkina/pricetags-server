@@ -1,4 +1,4 @@
-from flask import render_template, redirect, url_for, flash, send_from_directory
+from flask import render_template, redirect, url_for, flash, send_from_directory, request
 from . import main
 from . import pricetags_app
 from flask_login import login_required, current_user
@@ -32,7 +32,7 @@ def pricetags_page():
 def add_new_pricetag():
     form = AddPriceTagForm()
     form.goods.choices = [(good.id, good.name) for good in Good.query.all()]
-    if form.validate_on_submit():
+    if request.method == 'POST' and form.validate_on_submit():
         pricetag = PriceTag.query.filter_by(serial_number=form.serial.data).first()
         if pricetag is None:
             try:
@@ -47,12 +47,12 @@ def add_new_pricetag():
                     db.session.add(new_pricetag_to_good)
                     index += 1
                 db.session.commit()
-                redirect(url_for('pricetags_app.add_new_pricetag'))
             except Exception:
                 db.session.rollback()
             else:
                 # print('no errors')
-                upload_data_to_pricetag(form.serial.data)
+                # upload_data_to_pricetag(form.serial.data)
+                return redirect(url_for('pricetags_app.add_new_pricetag'))
         else:
             flash('Ценник с таким серийным номером уже существует.')
     if current_user.role_id == Permission.SERVICER:
@@ -65,15 +65,16 @@ def add_new_pricetag():
 def remove_pricetag():
     form = RemovePriceTagForm()
     form.pricetags.choices = [(pricetag.id, pricetag.serial_number) for pricetag in PriceTag.query.all()]
-    if form.validate_on_submit():
+    if request.method == 'POST' and form.validate_on_submit():
         try:
             for pricetag_id in form.pricetags.data:
                 PriceTag.query.filter_by(id=pricetag_id).delete()
                 PriceTagToGood.query.filter_by(pricetag_id=pricetag_id).delete()
             db.session.commit()
-            redirect(url_for('pricetags_app.remove_pricetag'))
         except Exception:
             db.session.rollback()
+        else:
+            return redirect(url_for('pricetags_app.remove_pricetag'))
     if current_user.role_id == Permission.SERVICER:
         return render_template('remove_pricetag.html', form=form), 200
     return redirect(url_for('main.index_page'))

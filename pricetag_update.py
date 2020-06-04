@@ -28,18 +28,18 @@ def upload_data_to_pricetag(serial):
         curr_good = Good.query.filter_by(id=good[0]).first()
         if not curr_good:
             return
-        with open('/home/zhblnd/diplom/flask-server/tmp/count', 'w') as f:
+        with open('./tmp/count', 'w') as f:
             f.write(str(count))
-        cmd = f'/usr/bin/scp /home/zhblnd/diplom/flask-server/tmp/count root@{pricetag.current_ip}:/opt/goods/'
+        cmd = f'/usr/bin/scp ./tmp/count root@{pricetag.current_ip}:/opt/goods/'
         os.system(cmd)
-        os.remove('/home/zhblnd/diplom/flask-server/tmp/count')
-        cmd = f'/usr/bin/scp /home/zhblnd/diplom/flask-server/goods/{curr_good.uid}/name root@{pricetag.current_ip}:/opt/goods/good{good[1]}/'
+        os.remove('./tmp/count')
+        cmd = f'/usr/bin/scp ./goods/{curr_good.uid}/name root@{pricetag.current_ip}:/opt/goods/good{good[1]}/'
         os.system(cmd)
-        cmd = f'/usr/bin/scp /home/zhblnd/diplom/flask-server/goods/{curr_good.uid}/price root@{pricetag.current_ip}:/opt/goods/good{good[1]}/'
+        cmd = f'/usr/bin/scp ./goods/{curr_good.uid}/price root@{pricetag.current_ip}:/opt/goods/good{good[1]}/'
         os.system(cmd)
-        cmd = f'/usr/bin/scp /home/zhblnd/diplom/flask-server/goods/{curr_good.uid}/specs root@{pricetag.current_ip}:/opt/goods/good{good[1]}/'
+        cmd = f'/usr/bin/scp ./goods/{curr_good.uid}/specs root@{pricetag.current_ip}:/opt/goods/good{good[1]}/'
         os.system(cmd)
-        cmd = f'/usr/bin/scp /home/zhblnd/diplom/flask-server/goods/{curr_good.uid}/good.bin root@{pricetag.current_ip}:/opt/goods/good{good[1]}/'
+        cmd = f'/usr/bin/scp ./goods/{curr_good.uid}/good.bin root@{pricetag.current_ip}:/opt/goods/good{good[1]}/'
         os.system(cmd)
     send_message(pricetag.current_ip, pricetag.serial_number, MSG_UPDATE)
 
@@ -59,7 +59,7 @@ def update_good_name(good_uid):
     pricetag = PriceTag.query.filter_by(id=pricetag_to_good.pricetag_id).first()
     if not pricetag.current_ip:
         return
-    cmd = f'/usr/bin/scp /home/zhblnd/diplom/flask-server/goods/{good_uid}/name root@{pricetag.current_ip}:/opt/goods/good{pricetag_to_good.index}/'
+    cmd = f'/usr/bin/scp ./goods/{good_uid}/name root@{pricetag.current_ip}:/opt/goods/good{pricetag_to_good.index}/'
     os.system(cmd)
     send_message(pricetag.current_ip, pricetag.serial_number, MSG_UPDATE)
 
@@ -72,7 +72,7 @@ def update_good_price(good_uid):
     pricetag = PriceTag.query.filter_by(id=pricetag_to_good.pricetag_id).first()
     if not pricetag.current_ip:
         return
-    cmd = f'/usr/bin/scp /home/zhblnd/diplom/flask-server/goods/{good_uid}/price root@{pricetag.current_ip}:/opt/goods/good{pricetag_to_good.index}/'
+    cmd = f'/usr/bin/scp ./goods/{good_uid}/price root@{pricetag.current_ip}:/opt/goods/good{pricetag_to_good.index}/'
     os.system(cmd)
     send_message(pricetag.current_ip, pricetag.serial_number, MSG_UPDATE)
 
@@ -85,7 +85,7 @@ def update_good_pic(good_uid):
     pricetag = PriceTag.query.filter_by(id=pricetag_to_good.pricetag_id).first()
     if not pricetag.current_ip:
         return
-    cmd = f'/usr/bin/scp /home/zhblnd/diplom/flask-server/goods/{good_uid}/good.bin root@{pricetag.current_ip}:/opt/goods/good{pricetag_to_good.index}/'
+    cmd = f'/usr/bin/scp ./goods/{good_uid}/good.bin root@{pricetag.current_ip}:/opt/goods/good{pricetag_to_good.index}/'
     os.system(cmd)
     send_message(pricetag.current_ip, pricetag.serial_number, MSG_UPDATE)
 
@@ -98,7 +98,7 @@ def update_good_specs(good_uid):
     pricetag = PriceTag.query.filter_by(id=pricetag_to_good.pricetag_id).first()
     if not pricetag.current_ip:
         return
-    cmd = f'/usr/bin/scp /home/zhblnd/diplom/flask-server/goods/{good_uid}/specs root@{pricetag.current_ip}:/opt/goods/good{pricetag_to_good.index}/'
+    cmd = f'/usr/bin/scp ./goods/{good_uid}/specs root@{pricetag.current_ip}:/opt/goods/good{pricetag_to_good.index}/'
     os.system(cmd)
     send_message(pricetag.current_ip, pricetag.serial_number, MSG_UPDATE)
 

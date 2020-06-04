@@ -63,7 +63,7 @@ class PriceTag(db.Model):
     def update(cls, serial, curr_ip):
         pricetag = cls.query.filter_by(serial_number=serial).first()
         if pricetag.current_ip is None:
-            cmd = "/home/zhblnd/diplom/flask-server/bash_scripts/scp-config.sh %s" % curr_ip
+            cmd = "/home/zhblnd/diplom/flask-server/scripts/scp-config.sh %s" % curr_ip
             os.system(cmd)
         pricetag.current_ip = curr_ip
         pricetag.last_ping = datetime.datetime.utcnow()
